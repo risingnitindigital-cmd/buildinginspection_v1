@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victoria Building Inspection | Melbourne's Trusted Inspectors</title>
+    <meta name="description" content="Licensed Australian inspectors providing detailed, same-day building, pest, and construction inspections across Victoria. Book your inspection today.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --primary-blue: #0A2558; /* Deep Royal Blue */
+            --secondary-blue: #1A3A75;
+            --accent-gold: #FFB800; /* Vibrant Gold */
+            --accent-hover: #e0a200;
+            --text-dark: #333333;
+            --text-gray: #555555;
+            --bg-light: #ffffff;
+            --bg-offwhite: #f8f9fa;
+            --border-radius: 12px;
+            --shadow-card: 0 10px 30px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+        
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding { padding: 80px 0; }
+        .text-center { text-align: center; }
+        .grid { display: grid; gap: 30px; }
+        
+        h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+        h2 { font-size: 2.5rem; color: var(--primary-blue); }
+        p { color: var(--text-gray); }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-gold);
+            color: var(--primary-blue);
+            padding: 14px 32px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: 2px solid var(--accent-gold);
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: transparent;
+            color: var(--accent-gold);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 14px 32px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary-blue);
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 90px;
+        }
+        .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary-blue); }
+        .logo span { color: var(--accent-gold); }
+        
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-weight: 500; font-size: 1rem; color: var(--primary-blue); }
+        .nav-links a:hover { color: var(--accent-gold); }
+        
+        .header-cta { display: flex; align-items: center; gap: 20px; }
+        .phone { font-weight: 700; color: var(--primary-blue); display: flex; align-items: center; gap: 8px; }
+
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary-blue); }
+
+        /* --- HERO SECTION (FIXED SLIDER) --- */
+        .hero {
+            position: relative;
+            padding: 100px 0;
+            color: white;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background-color: #000; /* Fallback color */
+        }
+
+        /* Slider Container */
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Individual Slide */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            /* 18s total loop: 6s per image x 3 images */
+            animation: crossFade 18s infinite; 
+        }
+
+        /* Overlay to darken images for text readability */
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); 
+            z-index: 1;
+        }
+
+        /* Slide Images */
+        .slide:nth-child(1) {
+            background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            animation-delay: 0s;
+        }
+        .slide:nth-child(2) {
+            background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            animation-delay: 6s;
+        }
+        .slide:nth-child(3) {
+            background-image: url('https://images.unsplash.com/photo-1593696140829-c38b56906d2e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            animation-delay: 12s;
+        }
+
+        /* Keyframes for smooth cross-fade */
+        @keyframes crossFade {
+            0% { opacity: 0; }
+            10% { opacity: 1; }  /* Fade in quickly */
+            33% { opacity: 1; }  /* Stay visible */
+            43% { opacity: 0; }  /* Fade out */
+            100% { opacity: 0; }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+            z-index: 2; /* Sits above overlay */
+            position: relative;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-transform: capitalize;
+        }
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #f0f0f0;
+            margin-bottom: 30px;
+            max-width: 90%;
+        }
+
+        .hero-form-card {
+            background: white;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border-top: 5px solid var(--accent-gold);
+        }
+        .hero-form-card h3 { color: var(--primary-blue); text-align: center; margin-bottom: 20px; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-input {
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit; font-size: 0.95rem;
+        }
+        .form-btn { width: 100%; border: none; font-size: 1.1rem; }
+
+        /* --- TRUST STRIP --- */
+        .trust-strip { background: #f4f6f9; padding: 25px 0; border-bottom: 1px solid #e1e1e1; }
+        .trust-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 10px; font-weight: 600; color: #555; }
+        .trust-item i { color: var(--primary-blue); font-size: 1.2rem; }
+
+        /* --- HIDDEN DEFECTS SECTION --- */
+        .defects-grid {
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+        }
+        .defects-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.05rem;
+        }
+        .defects-list li i { color: #d9534f; } /* Red warning icon */
+
+        /* --- TAILORED SOLUTIONS (Cards) --- */
+        .tailored-section { background: var(--primary-blue); color: white; }
+        .tailored-section h2 { color: white; }
+        .tailored-section p.sub-head { color: rgba(255,255,255,0.8); margin-bottom: 40px; }
+        
+        .tailored-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .tailored-card {
+            background: rgba(255,255,255,0.08);
+            padding: 40px 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+        }
+        .tailored-card:hover { background: rgba(255,255,255,0.15); transform: translateY(-5px); }
+        .tailored-icon {
+            width: 60px; height: 60px; background: var(--accent-gold); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--primary-blue);
+            margin-bottom: 25px;
+        }
+        .tailored-card h3 { color: white; margin-bottom: 15px; }
+        .tailored-card p { color: #ddd; margin-bottom: 20px; }
+        .tailored-link { color: var(--accent-gold); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+
+        /* --- FREE VALUE REPORT (Tablet Style) --- */
+        .value-report { background: #f8faff; overflow: hidden; }
+        .value-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        
+        .value-content h2 { margin-bottom: 20px; }
+        .value-check-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            font-size: 1.1rem;
+        }
+        .value-check-list li i { color: var(--primary-blue); margin-top: 5px; } /* Checkmark */
+        
+        .value-image img {
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: var(--transition);
+        }
+        .value-image img:hover { transform: perspective(1000px) rotateY(0deg); }
+
+        /* --- SERVICES (Big Icons) --- */
+        .services-section { background: white; }
+        .services-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        
+        .service-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 15px;
+            padding: 40px 25px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: transparent;
+        }
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; 
+            background: var(--primary-blue); transform: scaleX(0); transition: var(--transition);
+        }
+        .service-card:hover::before { transform: scaleX(1); }
+
+        .service-icon {
+            font-size: 3rem; color: var(--primary-blue); margin-bottom: 25px;
+        }
+        .service-card h3 { font-size: 1.3rem; margin-bottom: 15px; }
+        .service-card p { font-size: 0.95rem; margin-bottom: 25px; line-height: 1.7; }
+        .read-more {
+            color: var(--accent-gold); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px;
+        }
+
+        /* --- PROCESS (Timeline) --- */
+        .process-section { background: #f9f9f9; }
+        .process-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            padding: 0 20px;
+        }
+        /* Connecting Line */
+        .process-wrapper::before {
+            content: ''; position: absolute; top: 40px; left: 50px; right: 50px; height: 2px; background: #ddd; z-index: 1;
+        }
+        
+        .process-step {
+            position: relative; z-index: 2; text-align: center; flex: 1; padding: 0 15px;
+        }
+        .step-icon-box {
+            width: 80px; height: 80px; background: white; border: 2px solid var(--accent-gold); border-radius: 50%;
+            margin: 0 auto 25px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; color: var(--primary-blue); box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .step-number {
+            position: absolute; top: 0; right: calc(50% - 40px); background: var(--primary-blue); color: white;
+            width: 25px; height: 25px; border-radius: 50%; font-size: 0.8rem; display: flex; align-items: center; justify-content: center;
+        }
+        .process-step h4 { color: var(--primary-blue); margin-bottom: 10px; }
+        .process-step p { font-size: 0.9rem; }
+
+        /* --- WHY CHOOSE US (Features) --- */
+        .features-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .feature-box { display: flex; gap: 20px; align-items: flex-start; }
+        .feat-icon {
+            min-width: 50px; height: 50px; background: #eef2ff; color: var(--primary-blue); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+        }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials-section { background: var(--bg-offwhite); }
+        .review-card {
+            background: white; padding: 30px; border-radius: 10px; box-shadow: var(--shadow-card);
+        }
+        .stars { color: var(--accent-gold); margin-bottom: 15px; }
+        .review-author { margin-top: 20px; font-weight: 700; color: var(--primary-blue); }
+
+        /* --- CTA SECTION (Blue) --- */
+        .cta-section {
+            background: var(--primary-blue); color: white; padding: 80px 20px; text-align: center;
+            background-image: linear-gradient(rgba(10, 37, 88, 0.95), rgba(10, 37, 88, 0.95)), url('https://www.transparenttextures.com/patterns/cubes.png');
+        }
+        .cta-content { max-width: 800px; margin: 0 auto; }
+        .cta-section h2 { color: white; font-size: 2.8rem; margin-bottom: 20px; }
+        .cta-buttons { margin-top: 40px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+
+        /* --- FAQ --- */
+        .faq-item {
+            background: white; border: 1px solid #eee; border-radius: 8px; margin-bottom: 15px; padding: 20px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .faq-item:hover { border-color: var(--primary-blue); }
+        .faq-question { font-weight: 600; color: var(--primary-blue); display: flex; justify-content: space-between; }
+        .faq-answer { display: none; margin-top: 15px; color: #666; font-size: 0.95rem; }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+
+        /* --- FOOTER --- */
+        footer { background: #05132e; color: #ccc; padding: 70px 0 20px; }
+        .footer-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 50px; }
+        .footer-col h4 { color: white; margin-bottom: 25px; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col a:hover { color: var(--accent-gold); padding-left: 5px; }
+        .copyright { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; text-align: center; font-size: 0.9rem; }
+
+        /* --- WHATSAPP BUTTON --- */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background-color: #25d366; color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 1000; transition: var(--transition);
+        }
+        .whatsapp-float:hover { transform: translateY(-5px); background-color: #20ba5a; }
+
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 968px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .hero-text p { margin: 0 auto 30px; }
+            .hero-form-card { max-width: 500px; margin: 0 auto; }
+            .process-wrapper { flex-direction: column; gap: 40px; }
+            .process-wrapper::before { display: none; }
+            .step-number { right: 50%; transform: translateX(50%); top: -15px; }
+            .value-grid, .defects-grid { grid-template-columns: 1fr; }
+            .value-image { order: -1; } /* Image on top mobile */
+            .nav-links, .header-cta { display: none; }
+            .hamburger { display: block; }
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none; position: absolute; top: 90px; left: 0; width: 100%; background: white; padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); flex-direction: column; gap: 15px; text-align: center;
+        }
+        .mobile-menu.active { display: flex; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo">Victoria<span>Inspection</span></div>
+            <nav class="nav-links">
+                <a href="#services">Services</a>
+                <a href="#process">Process</a>
+                <a href="#about">About</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <div class="header-cta">
+                <a href="tel:0312345678" class="phone"><i class="fas fa-phone-alt"></i> (03) 1234 5678</a>
+                <a href="#book" class="btn">Book Inspection</a>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="#services">Services</a>
+                <a href="#process">Process</a>
+                <a href="#about">About</a>
+                <a href="#faq">FAQ</a>
+                <a href="#book" class="btn">Book Now</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        
+        <div class="hero-slider">
+            <div class="slide"></div>
+            <div class="slide"></div>
+            <div class="slide"></div>
+        </div>
+        
+        <div class="hero-overlay"></div>
+
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Victoria’s Most Trusted Building & Pest Inspectors</h1>
+                <p>Protecting Your Home, Your Investment & Your Peace of Mind with same-day detailed reports and thermal technology.</p>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; justify-content: flex-start;">
+                    <span style="background: rgba(255,255,255,0.15); padding: 5px 15px; border-radius: 20px; font-size: 0.9rem;"><i class="fas fa-check-circle" style="color: var(--accent-gold);"></i> Same-Day Reports</span>
+                    <span style="background: rgba(255,255,255,0.15); padding: 5px 15px; border-radius: 20px; font-size: 0.9rem;"><i class="fas fa-check-circle" style="color: var(--accent-gold);"></i> AS 4349.1 Compliant</span>
+                </div>
+            </div>
+            
+            <div class="hero-form-card" id="book">
+                <h3>Book Your Inspection</h3>
+                <form id="bookingForm" onsubmit="return validateForm(event)">
+                    <div class="form-group">
+                        <input type="text" class="form-input" id="name" placeholder="Full Name *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-input" id="phone" placeholder="Phone Number *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-input" id="email" placeholder="Email Address *" required>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-input" id="service">
+                            <option value="">Select Inspection Type</option>
+                            <option value="Pre-Purchase">Pre-Purchase Building</option>
+                            <option value="Building & Pest">Building & Pest Combo</option>
+                            <option value="New Build">New Build Stage</option>
+                            <option value="Dilapidation">Dilapidation Report</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn form-btn">Get Instant Quote</button>
+                    <p style="text-align: center; font-size: 0.8rem; margin-top: 15px; color: #666;">Fast response • No obligation</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="trust-strip">
+        <div class="container trust-grid">
+            <div class="trust-item"><i class="fas fa-trophy"></i> 15+ Years Experience</div>
+            <div class="trust-item"><i class="fas fa-user-shield"></i> Licensed & Insured</div>
+            <div class="trust-item"><i class="fas fa-bolt"></i> Same-Day Reporting</div>
+            <div class="trust-item"><i class="fas fa-map-marker-alt"></i> Servicing All Victoria</div>
+        </div>
+    </div>
+
+    <section class="section-padding" style="background: white;">
+        <div class="container grid defects-grid">
+            <div class="defects-content">
+                <h2>Don’t Let Hidden Defects Cost You Thousands</h2>
+                <p style="margin-bottom: 20px;">Many Victorian homes hide serious issues that the untrained eye cannot detect. Our inspections uncover these risks early.</p>
+                <ul class="defects-list">
+                    <li><i class="fas fa-exclamation-triangle"></i> Structural cracks & foundation movement</li>
+                    <li><i class="fas fa-water"></i> Water leaks, dampness & rising damp</li>
+                    <li><i class="fas fa-bug"></i> Active termite & timber pest activity</li>
+                    <li><i class="fas fa-bolt"></i> Unsafe electrical or plumbing work</li>
+                    <li><i class="fas fa-home"></i> Roof void & gutter defects</li>
+                </ul>
+                <br>
+                <a href="#book" class="btn">Start Your Inspection</a>
+            </div>
+            <div class="defects-image">
+                <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Inspector looking at wall" style="border-radius: 15px; box-shadow: var(--shadow-card);">
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding tailored-section">
+        <div class="container">
+            <div class="text-center">
+                <h2>Tailored Solutions for Every Stage</h2>
+                <p class="sub-head">Whether you are buying, building, or investing, we have a program for you.</p>
+            </div>
+            <div class="grid tailored-grid">
+                <div class="tailored-card">
+                    <div class="tailored-icon"><i class="fas fa-home"></i></div>
+                    <h3>First-Time Buyers</h3>
+                    <p>Navigate your first purchase with confidence. We explain every step clearly and help you avoid costly surprises.</p>
+                    <a href="#book" class="tailored-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="tailored-card">
+                    <div class="tailored-icon"><i class="fas fa-hard-hat"></i></div>
+                    <h3>New Build & Construction</h3>
+                    <p>Independent stage inspections (slab, frame, lock-up) to ensure your builder meets all standards before handover.</p>
+                    <a href="#book" class="tailored-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="tailored-card">
+                    <div class="tailored-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Investors & Commercial</h3>
+                    <p>Comprehensive reports for investment properties and commercial buildings to protect your portfolio and ROI.</p>
+                    <a href="#book" class="tailored-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding value-report">
+        <div class="container value-grid">
+            <div class="value-content">
+                <h2>Get a Free Property Value Report</h2>
+                <p style="margin-bottom: 25px;">Unlock exclusive property insights powered by Cotality (formerly CoreLogic/RP Data). Make smarter investment decisions.</p>
+                
+                <ul class="value-check-list">
+                    <li><i class="fas fa-check-circle"></i> <strong>Unlock Property Insights for FREE</strong><br><small>See what the agents see.</small></li>
+                    <li><i class="fas fa-check-circle"></i> <strong>Estimated Market Value</strong><br><small>Know if the price guide is fair.</small></li>
+                    <li><i class="fas fa-check-circle"></i> <strong>Rental Yield & Growth Trends</strong><br><small>Essential data for investors.</small></li>
+                </ul>
+                <br>
+                <a href="#book" class="btn">Get My Free Report</a>
+                <p style="margin-top: 15px; font-size: 0.8rem; font-style: italic;">Limit 1 per person. Delivered with your inspection.</p>
+            </div>
+            <div class="value-image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Tablet showing property report">
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding services-section" id="services">
+        <div class="container">
+            <div class="text-center">
+                <h2>Our Inspection Services</h2>
+                <p class="sub-head">Comprehensive assessments for total peace of mind.</p>
+            </div>
+            <br>
+            <div class="grid services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-search-location"></i></div>
+                    <h3>Pre-Purchase Inspection</h3>
+                    <p>Full structural & safety inspection before you buy. Includes photos, defect severity ratings & recommendations.</p>
+                    <a href="#book" class="read-more">Read More</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-bug"></i></div>
+                    <h3>Building & Pest</h3>
+                    <p>Two essential checks in one. Combines structural assessment with timber pest detection using thermal cameras.</p>
+                    <a href="#book" class="read-more">Read More</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-hammer"></i></div>
+                    <h3>New Build Stages</h3>
+                    <p>We inspect at Slab, Frame, Lock-Up, Fixing, and Handover to ensure your builder delivers quality.</p>
+                    <a href="#book" class="read-more">Read More</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h3>Dilapidation Reports</h3>
+                    <p>Document the condition of your property before neighbors start construction to prevent disputes.</p>
+                    <a href="#book" class="read-more">Read More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="text-center">
+                <h2>Why Choose Victoria Inspection?</h2>
+                <p class="sub-head">We don't just tick boxes. We provide authority-level insights.</p>
+            </div>
+            <div class="grid features-grid" style="margin-top: 40px;">
+                <div class="feature-box">
+                    <div class="feat-icon"><i class="fas fa-file-contract"></i></div>
+                    <div>
+                        <h4>AS 4349.1 Compliant</h4>
+                        <p>Our reports meet all Australian Standards for residential inspections.</p>
+                    </div>
+                </div>
+                <div class="feature-box">
+                    <div class="feat-icon"><i class="fas fa-camera"></i></div>
+                    <div>
+                        <h4>High-Res Photos</h4>
+                        <p>Every defect is photographed and explained in plain English.</p>
+                    </div>
+                </div>
+                <div class="feature-box">
+                    <div class="feat-icon"><i class="fas fa-temperature-low"></i></div>
+                    <div>
+                        <h4>Thermal Imaging</h4>
+                        <p>Advanced thermal detection included to find hidden moisture.</p>
+                    </div>
+                </div>
+                <div class="feature-box">
+                    <div class="feat-icon"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <h4>24h Turnaround</h4>
+                        <p>Get your report the same day or within 24 hours guaranteed.</p>
+                    </div>
+                </div>
+                <div class="feature-box">
+                    <div class="feat-icon"><i class="fas fa-user-hard-hat"></i></div>
+                    <div>
+                        <h4>15+ Years Exp.</h4>
+                        <p>Inspectors are registered builders, not just trainees.</p>
+                    </div>
+                </div>
+                <div class="feature-box">
+                    <div class="feat-icon"><i class="fas fa-comments"></i></div>
+                    <div>
+                        <h4>Post-Inspect Call</h4>
+                        <p>We call you to talk through the findings personally.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding process-section" id="process">
+        <div class="container">
+            <div class="text-center">
+                <h2>Your Inspection Journey, Simplified</h2>
+                <p class="sub-head">From our first chat to the day you get your report, we handle the heavy lifting.</p>
+            </div>
+            
+            <div class="process-wrapper">
+                <div class="process-step">
+                    <div class="step-icon-box"><i class="far fa-calendar-check"></i>
+                        <div class="step-number">1</div>
+                    </div>
+                    <h4>Book Online</h4>
+                    <p>Schedule instantly. We contact the agent to arrange access.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-icon-box"><i class="fas fa-search"></i>
+                        <div class="step-number">2</div>
+                    </div>
+                    <h4>We Inspect</h4>
+                    <p>Thorough assessment using moisture meters & thermal cams.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-icon-box"><i class="far fa-file-alt"></i>
+                        <div class="step-number">3</div>
+                    </div>
+                    <h4>Receive Report</h4>
+                    <p>Detailed PDF report delivered to your inbox within 24 hours.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-icon-box"><i class="fas fa-phone-volume"></i>
+                        <div class="step-number">4</div>
+                    </div>
+                    <h4>Consultation</h4>
+                    <p>Free follow-up call to discuss defects & negotiation strategies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding testimonials-section">
+        <div class="container">
+            <div class="text-center">
+                <h2>What Our Clients Say</h2>
+                <br>
+            </div>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"Extremely detailed report. Found issues the seller never disclosed regarding the roof leaks. Saved me thousands!"</p>
+                    <div class="review-author">— Michael A., Melbourne</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"The construction inspections caught several framing mistakes early. Builder fixed everything before handover. Worth every cent."</p>
+                    <div class="review-author">— Christine P., Point Cook</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"Professional, fast, and very thorough. The thermal imaging found moisture behind the shower tiles."</p>
+                    <div class="review-author">— James R., Geelong</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="about" style="background: white;">
+        <div class="container">
+            <div class="grid" style="grid-template-columns: 1fr 1fr; align-items: center; gap: 50px;">
+                <div>
+                    <h2>About Victoria Building Inspection</h2>
+                    <p>Victoria Building Inspection was founded with one goal: to protect Victorian buyers, sellers, and homeowners from costly building issues through honest, independent, expert inspections.</p>
+                    <br>
+                    <p><strong>Our Mission:</strong> To deliver accurate, unbiased property insights that give our clients peace of mind and financial protection.</p>
+                    <br>
+                    <ul style="list-style: disc; padding-left: 20px; color: #555;">
+                        <li>100% Independent (We work for YOU, not the agent)</li>
+                        <li>Fully Licensed & Insured</li>
+                        <li>Latest Technology employed on every job</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Construction team" style="border-radius: 12px; box-shadow: var(--shadow-card);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="faq" style="background: #f4f6f9;">
+        <div class="container">
+            <div class="text-center">
+                <h2>Frequently Asked Questions</h2>
+                <br>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">What does a building inspection include? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">A full assessment of structural integrity, moisture, pests, roofing, plumbing observations, electrical observations, safety hazards, and renovation quality.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">Do you offer same-day reports? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">Yes! All reports are delivered within 24 hours, and we often get them to you on the same day as the inspection.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">Can I attend the inspection? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">Absolutely. We encourage clients to attend, especially towards the end, so the inspector can walk you through any major findings.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">Do you check for termites? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">Yes. Our Building & Pest inspections include a full timber pest assessment using visual checks, moisture meters, and thermal imaging.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container cta-content">
+            <h2>Ready to Inspect Your Property?</h2>
+            <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">Get a professional, independent inspection with same-day reporting. Book a free, no-obligation consultation today.</p>
+            <div class="cta-buttons">
+                <a href="#book" class="btn">Book Free Consultation</a>
+                <a href="tel:0312345678" class="btn-outline">Call Now: (03) 1234 5678</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="grid footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="color: white; margin-bottom: 20px;">Victoria<span>Inspection</span></div>
+                    <p style="color: #aaa; font-size: 0.9rem;">Licensed independent inspectors protecting Victorian families and investors with honesty and integrity.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#process">Our Process</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#book">Pre-Purchase Inspection</a></li>
+                        <li><a href="#book">Building & Pest</a></li>
+                        <li><a href="#book">New Build Stages</a></li>
+                        <li><a href="#book">Commercial</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> (03) 1234 5678</li>
+                        <li><i class="fas fa-envelope"></i> info@vicinspection.com.au</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Servicing Greater Victoria</li>
+                        <li><i class="fas fa-clock"></i> Mon–Sat: 8am–7pm</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Victoria Building Inspection. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/8000090000" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Form Validation
+        function validateForm(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            
+            if(name && phone && email) {
+                alert('Thank you, ' + name + '! We have received your request and will call you shortly.');
+                document.getElementById('bookingForm').reset();
+            } else {
+                alert('Please fill in all required fields.');
+            }
+            return false;
+        }
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        // FAQ Toggle
+        function toggleFaq(element) {
+            element.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
